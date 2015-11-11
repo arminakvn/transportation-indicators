@@ -9,10 +9,10 @@
       console.log(j);
       var chart = c3.generate({
         size: {
-          width: 640,
+          width: 840,
           height: 450
         },
-        bindto: "#chart",
+        bindto: "#chart4_1",
         data: {
             json: j.rows,
             keys: {
@@ -39,7 +39,7 @@
               y: {
                   label: {
                     text: 'Patents of commuters',
-                    position: 'outer-middle'
+                    // position: 'outer-middle'
                   },
                   max: 1
 
