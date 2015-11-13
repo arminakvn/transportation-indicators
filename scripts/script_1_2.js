@@ -2,7 +2,7 @@
   /*
     1.1 Average weekly ridership
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_1_2 ORDER BY getFullYear &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_1_2 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
@@ -10,7 +10,8 @@
        data_parsed = []
        _data = []
        x_data = []
-       data_point = []
+       data_point1 = []
+       data_point2 = []
       // console.log(d3.keys(j.rows[0]))
       
 
@@ -22,26 +23,32 @@
           fixed_route_revenue_service_hours: +each.fixed_route_revenue_service_hours,
           demand_response_the_ride_rsh: +each.demand_response_the_ride_rsh,
           date: new Date(each.year, 01, 01),
+          year: each.year,
         }
         )
         
         // }
       })
       var _nestedData = d3.nest()
-          .key(function(d){return d.year})
+          .key(function(d){return d.Year})
           .entries(_data);
       console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        data_point.push(mnt_data.ridership);
-        x_data.push(mnt_data.date);
+        data_point1.push(mnt_data.fixed_route_revenue_service_hours);
+        data_point2.push(mnt_data.demand_response_the_ride_rsh);
+        x_data.push(mnt_data.year);
         
       })
-      data_point.unshift('ridership');
+      data_point1.unshift('fixed_route_revenue_service_hours');
+      data_point2.unshift('demand_response_the_ride_rsh');
       data_parsed.push(
-          data_point
+          data_point1
           );
-      x_data.unshift('date');
+      data_parsed.push(
+          data_point2
+        );
+      x_data.unshift('year');
       data_parsed.unshift(x_data);
       console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
@@ -74,7 +81,7 @@
         },
         bindto: "#chart1_1",
         data: {
-            x: 'date',
+            x: 'year',
             columns: data_parsed,
              type: 'line'
           },
@@ -94,20 +101,18 @@
         //     type: 'line'
         //   },
           axis: {
-              x: {
+ 
                  x: {
-                    type: 'timeseries',
-                        tick: {
-                            format: function (x) { 
-                              console.log("x",x);
-                              return x.mon; }
-                        }
-                    },
+                    type: 'category',
+                      categories: data_parsed.map(function(d){
+                        console.log(d.year)
+                        return d.year;
+                      }),
                   // height: 100
               },
               y: {
                   label: {
-                    text: 'Average monthly ridership',
+                    text: 'MBTA Service Provided (Service Revenue Hours)',
                     // position: 'outer-middle'
                   },
                   tick: {
