@@ -17,8 +17,8 @@
         data_parsed.push(
         {
           year: each.year,
-          massachusetts: +each.massachusetts,
-          usa: +each.usa
+          "Massachusetts": +each.massachusetts,
+          "United States": +each.usa
         }
         )
         // }
@@ -56,7 +56,7 @@
         data: {
             json: data_parsed,
             keys: {
-                value: ['massachusetts', 'usa']
+                value: ['Massachusetts', 'United States']
             },
             // groups: [['public_transit', 'walk', 'bicycle', 'other', 'car']],
             colors: {

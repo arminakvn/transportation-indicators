@@ -20,8 +20,8 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          fixed_route_revenue_service_hours: +each.fixed_route_revenue_service_hours,
-          demand_response_the_ride_rsh: +each.demand_response_the_ride_rsh,
+          "Fixed route revenue service hours": +each.fixed_route_revenue_service_hours,
+          "Demand response the ride rsh": +each.demand_response_the_ride_rsh,
           date: new Date(each.year, 01, 01),
           year: each.year,
         }
@@ -35,13 +35,13 @@
       console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        data_point1.push(mnt_data.fixed_route_revenue_service_hours);
-        data_point2.push(mnt_data.demand_response_the_ride_rsh);
+        data_point1.push(mnt_data["Fixed route revenue service hours"]);
+        data_point2.push(mnt_data["Demand response the ride rsh"]);
         x_data.push(mnt_data.year);
         
       })
-      data_point1.unshift('fixed_route_revenue_service_hours');
-      data_point2.unshift('demand_response_the_ride_rsh');
+      data_point1.unshift("Fixed route revenue service hours");
+      data_point2.unshift("Demand response the ride rsh");
       data_parsed.push(
           data_point1
           );
@@ -79,7 +79,7 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart1_1",
+        bindto: "#chart1_2",
         data: {
             x: 'year',
             columns: data_parsed,

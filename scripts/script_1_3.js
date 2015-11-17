@@ -1,8 +1,8 @@
 (function() {
   /*
-    1.1 Average weekly ridership
+    1.3 RTA Ridership
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_1_1 ORDER BY year, month   &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_1_3 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
@@ -10,7 +10,8 @@
        data_parsed = []
        _data = []
        x_data = []
-       data_point = []
+       data_point1 = []
+       data_point2 = []
       // console.log(d3.keys(j.rows[0]))
       
 
@@ -19,30 +20,36 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          year: each.year,
-          month: each.month,
-          "Ridership": +each.all_modes,
-          date: new Date(each.year, each.month, 01),
-          mon: (new Date(each.year, each.month, 01)).getFullYear() + ", " + (new Date(each.year, each.month, 01)).getMonth()
+          "RTA Ridership": +each.rta_ridership,
+          "Revenue Service Hours": +each.rta_rsh,
+          date: new Date(each.year, 01, 01),
+          "Year": each.year,
         }
         )
         
+        // }
       })
       var _nestedData = d3.nest()
-          .key(function(d){return d.year})
+          .key(function(d){return d["Year"]})
           .entries(_data);
       console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        data_point.push(mnt_data["Ridership"]);
-        x_data.push(mnt_data.date);
+        console.log(mnt_data)
+        data_point1.push(mnt_data["RTA Ridership"]);
+        data_point2.push(mnt_data["Revenue Service Hours"]);
+        x_data.push(mnt_data["Year"]);
         
       })
-      data_point.unshift('Ridership');
+      data_point1.unshift("RTA Ridership");
+      data_point2.unshift("Revenue Service Hours");
       data_parsed.push(
-          data_point
+          data_point1
           );
-      x_data.unshift('date');
+      data_parsed.push(
+          data_point2
+        );
+      x_data.unshift('Year');
       data_parsed.unshift(x_data);
       console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
@@ -73,11 +80,15 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart1_1",
+        bindto: "#chart1_3",
         data: {
-            x: 'date',
+            x: 'Year',
             columns: data_parsed,
-             type: 'line'
+             type: 'line',
+            axes: {
+                "RTA Ridership": 'y',
+                "Revenue Service Hours": 'y2'
+            }
           },
         // data: {
         //     json: data_parsed,
@@ -95,20 +106,21 @@
         //     type: 'line'
         //   },
           axis: {
-                  x: {
+ 
+                 x: {
                     type: 'category',
                       categories: data_parsed.map(function(d){
-                        console.log(d.year)
-                        return d.year;
+                        console.log(d["Year"])
+                        return d["Year"];
                       }),
                   // height: 100
               },
-                  // height: 100
               y: {
                   label: {
-                    text: 'Average monthly ridership',
+                    text: 'RTA Ridership',
                     // position: 'outer-middle'
                   },
+                  max: 35000000,
                   tick: {
                     format: function(d) {return d.toFixed(0);}
                     //or format: function (d) { return '$' + d; }
@@ -116,6 +128,16 @@
                   // max: 1
 
               },
+              y2: {
+                show: true,
+                max: 1400000,
+                min: 0,
+                label: {
+                    text: 'Revenue Service Hours',
+                    // position: 'outer-middle'
+                  },
+
+              }
           },
           subchart: {
                 show: false
@@ -128,6 +150,7 @@
               show: true
           }
       })
+      chart.transform('bar', 'RTA Ridership')
       console.log(chart.data.colors());
       
       // chart.data.colors({

@@ -16,7 +16,7 @@
            data_parsed.push(
               {
                 'label' : each_key, 
-                'value': j.rows[0][each_key]
+                'Commute Time': j.rows[0][each_key]
               }
             )
            }
@@ -24,8 +24,8 @@
       data_map = d3.map(data_parsed, function(d){return d.label;});
       console.log(data_map)
       function carto_db_fields (val) {
-        console.log(data_map.get(val.label).value);
-        return data_map.get(val.label).value > 1;
+        console.log(data_map.get(val.label)["Commute Time"]);
+        return data_map.get(val.label)["Commute Time"] > 1;
       }
       data_p = data_parsed.filter(carto_db_fields);
       
@@ -44,7 +44,7 @@
         data: {
             json: data_p,
             keys: {
-                value: ['value']
+                value: ["Commute Time"]
             },
             // groups: [['public_transit', 'walk', 'bicycle', 'other', 'car']],
             colors: {
