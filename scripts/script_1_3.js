@@ -122,7 +122,7 @@
                   },
                   max: 35000000,
                   tick: {
-                    format: function(d) {return d.toFixed(0);}
+                    format: d3.format(",")
                     //or format: function (d) { return '$' + d; }
                   }
                   // max: 1

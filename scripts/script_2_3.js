@@ -2,7 +2,7 @@
   /*
     2.1 Share of Bridges that are Structurally Deficient, MA vs Peer States vs US
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_2_1 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_2_3 &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
@@ -21,42 +21,42 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "MA": +each.ma_fo,
-          "PS": +each.ps_fo,
-          "US": +each.us_fo,
-          date: new Date(each.year, 01, 01),
-          "Year": each.year,
+          "Beyond Use Life (#)": +each.beyond_use_life__,
+          "Beyond Use Life (%)": +each.beyond_use_life,
+          // "US": +each.us_fo,
+          "Data Label": each.data_label,
+          "Line": each.line
         }
         )
         
         // }
       })
-      var _nestedData = d3.nest()
-          .key(function(d){return d["Year"]})
-          .entries(_data);
-      console.log("data",_nestedData);
+      // var _nestedData = d3.nest()
+      //     .key(function(d){return d["Year"]})
+      //     .entries(_data);
+      // console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
         console.log(mnt_data)
-        data_point1.push(mnt_data["MA"]);
-        data_point2.push(mnt_data["PS"]);
-        data_point3.push(mnt_data["US"]);
-        x_data.push(mnt_data["Year"]);
+        data_point1.push(mnt_data["Beyond Use Life (%)"]);
+        data_point2.push(mnt_data["Data Label"]);
+        // data_point3.push(mnt_data["US"]);
+        x_data.push(mnt_data["Line"]);
         
       })
-      data_point1.unshift("MA");
-      data_point2.unshift("PS");
-      data_point3.unshift("US");
+      data_point1.unshift("Beyond Use Life (%)");
+      data_point2.unshift("Data Label");
+      // data_point3.unshift("US");
       data_parsed.push(
           data_point1
           );
-      data_parsed.push(
-          data_point2
-        );
-      data_parsed.push(
-          data_point3
-        );
-      x_data.unshift('Year');
+      // data_parsed.push(
+      //     data_point2
+      //   );
+      // data_parsed.push(
+      //     data_point3
+      //   );
+      x_data.unshift("Line");
       data_parsed.unshift(x_data);
       console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
@@ -87,11 +87,17 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart2_1_2",
+        bindto: "#chart2_3",
         data: {
-            x: 'Year',
+            x: "Line",
             columns: data_parsed,
-             type: 'line',
+            type: 'bar',
+            labels: {
+              format:  function (v, id, i, j) { 
+                val = v * 2281;
+                return (v*100).toFixed(0) + '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
             // axes: {
             //     "RTA Ridership": 'y',
             //     "Revenue Service Hours": 'y2'
@@ -115,23 +121,23 @@
           axis: {
  
                  x: {
-                    type: 'timeserries',
+                    type: 'category',
                       categories: data_parsed.map(function(d){
                         console.log(d)
-                        console.log(d["Year"])
-                        return d["Year"];
+                        console.log(d["Line"])
+                        return d["Line"];
                       }),
-                  // height: 100
+                  height: 100
               },
               y: {
                   label: {
-                    text: 'Share of Bridges that are Functionally Obsolete, MA vs Peer States vs US',
+                    text: 'Percent of MBTA Vehicles Beyond Useful Life',
                     position: 'outer-middle'
                   },
-                  max: 0.60,
-                  min: 0.01,
+                  max: 0.9,
+                  // min: 0.01,
                   tick: {
-                    format: function(d) {return (d*100).toFixed(0) + '%';}
+                    format: d3.format("%")
                     //or format: function (d) { return '$' + d; }
                   }
                   // max: 1
@@ -159,7 +165,7 @@
               show: true
           }
       })
-      // chart.transform('bar', 'RTA Ridership')
+      // chart.transform('line', 'Target level')
       // console.log(chart.data.colors());
       
       // chart.data.colors({
@@ -171,4 +177,4 @@
     //     chart.groups([['_0_to_29_minutes', '_30_59_minutes', '_60_plus_minutes']])
     // }, 10);
     });
-})();
+})(); 

@@ -131,7 +131,7 @@
                   max: 0.90,
                   min: 0.01,
                   tick: {
-                    format: function(d) {return (d*100).toFixed(1) + '%';}
+                    format: function(d) {return (d*100).toFixed(0) + '%';}
                     //or format: function (d) { return '$' + d; }
                   }
                   // max: 1

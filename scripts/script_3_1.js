@@ -2,7 +2,7 @@
   /*
     2.1 Share of Bridges that are Structurally Deficient, MA vs Peer States vs US
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_2_1 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_3_1 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
@@ -21,9 +21,9 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "MA": +each.ma_fo,
-          "PS": +each.ps_fo,
-          "US": +each.us_fo,
+          "MBTA projected operating deficit in millions of dollars": +each.mbta_projected_operating_deficit_in_millions_of_dollars,
+          // "Target level": +each.target_level,
+          // "US": +each.us_fo,
           date: new Date(each.year, 01, 01),
           "Year": each.year,
         }
@@ -31,31 +31,31 @@
         
         // }
       })
-      var _nestedData = d3.nest()
-          .key(function(d){return d["Year"]})
-          .entries(_data);
-      console.log("data",_nestedData);
+      // var _nestedData = d3.nest()
+      //     .key(function(d){return d["Year"]})
+      //     .entries(_data);
+      // console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
         console.log(mnt_data)
-        data_point1.push(mnt_data["MA"]);
-        data_point2.push(mnt_data["PS"]);
-        data_point3.push(mnt_data["US"]);
+        data_point1.push(mnt_data["MBTA projected operating deficit in millions of dollars"]);
+        // data_point2.push(mnt_data["Target level"]);
+        // data_point3.push(mnt_data["US"]);
         x_data.push(mnt_data["Year"]);
         
       })
-      data_point1.unshift("MA");
-      data_point2.unshift("PS");
-      data_point3.unshift("US");
+      data_point1.unshift("Total Massdot pavement in good or excellent condition");
+      // data_point2.unshift("Target level");
+      // data_point3.unshift("US");
       data_parsed.push(
           data_point1
           );
-      data_parsed.push(
-          data_point2
-        );
-      data_parsed.push(
-          data_point3
-        );
+      // data_parsed.push(
+      //     data_point2
+      //   );
+      // data_parsed.push(
+      //     data_point3
+      //   );
       x_data.unshift('Year');
       data_parsed.unshift(x_data);
       console.log("data_parsed", data_parsed);
@@ -87,11 +87,12 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart2_1_2",
+        bindto: "#chart3_1",
         data: {
             x: 'Year',
             columns: data_parsed,
-             type: 'line',
+            type: 'line',
+
             // axes: {
             //     "RTA Ridership": 'y',
             //     "Revenue Service Hours": 'y2'
@@ -125,13 +126,13 @@
               },
               y: {
                   label: {
-                    text: 'Share of Bridges that are Functionally Obsolete, MA vs Peer States vs US',
+                    text: 'Total Massdot pavement in good or excellent condition',
                     position: 'outer-middle'
                   },
-                  max: 0.60,
-                  min: 0.01,
+                  // max: 0.90,
+                  min: 10,
                   tick: {
-                    format: function(d) {return (d*100).toFixed(0) + '%';}
+                    format: d3.format("$,")
                     //or format: function (d) { return '$' + d; }
                   }
                   // max: 1
@@ -159,7 +160,7 @@
               show: true
           }
       })
-      // chart.transform('bar', 'RTA Ridership')
+      // chart.transform('line', 'Target level')
       // console.log(chart.data.colors());
       
       // chart.data.colors({
