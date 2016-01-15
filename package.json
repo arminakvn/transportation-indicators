@@ -8,5 +8,7 @@
   },
   "author": "armin akhavan",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "c3": "^0.4.11-rc4"
+  }
 }

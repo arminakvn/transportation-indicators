@@ -2,7 +2,7 @@
   /*
     2.1 Share of Bridges that are Structurally Deficient, MA vs Peer States vs US
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_3_1 & ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_6_2 & ORDER BY Race &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
@@ -21,11 +21,11 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "MBTA projected operating deficit in millions of dollars": +each.mbta_projected_operating_deficit_in_millions_of_dollars,
-          // "Target level": +each.target_level,
+          "Overall Average": +each.overall_average,
+           "Mean": +each.mean,
           // "US": +each.us_fo,
-          date: new Date(each.year, 01, 01),
-          "Year": each.year,
+//          date: new Date(each.year, 01, 01),
+          "Race": each.race,
         }
         )
         
@@ -38,25 +38,25 @@
       
       _data.forEach(function(mnt_data){
         console.log(mnt_data)
-        data_point1.push(mnt_data["MBTA projected operating deficit in millions of dollars"]);
-        // data_point2.push(mnt_data["Target level"]);
+        data_point1.push(mnt_data["Mean"]);
+         data_point2.push(mnt_data["Overall Average"]);
         // data_point3.push(mnt_data["US"]);
-        x_data.push(mnt_data["Year"]);
+        x_data.push(mnt_data["Race"]);
         
       })
-      data_point1.unshift("MBTA projected operating deficit in millions of dollars");
-      // data_point2.unshift("Target level");
+      data_point1.unshift("Mean");
+       data_point2.unshift("Overall Average");
       // data_point3.unshift("US");
       data_parsed.push(
           data_point1
           );
-      // data_parsed.push(
-      //     data_point2
-      //   );
+       data_parsed.push(
+           data_point2
+         );
       // data_parsed.push(
       //     data_point3
       //   );
-      x_data.unshift('Year');
+      x_data.unshift('Race');
       data_parsed.unshift(x_data);
       console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
@@ -87,11 +87,11 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart3_1",
+        bindto: "#chart6_2",
         data: {
-            x: 'Year',
+            x: 'Race',
             columns: data_parsed,
-            type: 'line',
+            type: 'bar',
 
             // axes: {
             //     "RTA Ridership": 'y',
@@ -116,24 +116,24 @@
           axis: {
  
                  x: {
-                    type: 'timeserries',
+                    type: 'category',
                       categories: data_parsed.map(function(d){
                         console.log(d)
-                        console.log(d["Year"])
-                        return d["Year"];
+                        console.log(d["Race"])
+                        return d["Race"];
                       }),
                   // height: 100
               },
               y: {
                   label: {
-                    text: 'MBTA Operating Gap (1991 - 2016)',
+                    text: 'Household Vehicle Availability by Race & Latino Origin',
                     position: 'outer-middle'
                   },
-                  // max: 0.90,
-                  min: 10,
+//                   max: 1.00,
+//                  min: 0.10,
                   tick: {
-                    format: d3.format("$,")
-                    //or format: function (d) { return '$' + d; }
+//                    format: d3.format(",")
+                      format: function(d) {return (d).toFixed(2);}
                   }
                   // max: 1
 
@@ -160,7 +160,7 @@
               show: true
           }
       })
-      // chart.transform('line', 'Target level')
+       chart.transform('line', 'Overall Average')
       // console.log(chart.data.colors());
       
       // chart.data.colors({
