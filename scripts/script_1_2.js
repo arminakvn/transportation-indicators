@@ -20,8 +20,8 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "Fixed route revenue service hours": +each.fixed_route_revenue_service_hours,
-          "Demand response the ride rsh": +each.demand_response_the_ride_rsh,
+          "Fixed Route": +each.fixed_route_revenue_service_hours,
+          "Demand Response 'The Ride'": +each.demand_response_the_ride_rsh,
           date: new Date(each.year, 01, 01),
           year: each.year,
         }
@@ -35,13 +35,13 @@
       console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        data_point1.push(mnt_data["Fixed route revenue service hours"]);
-        data_point2.push(mnt_data["Demand response the ride rsh"]);
+        data_point1.push(mnt_data["Fixed Route"]);
+        data_point2.push(mnt_data["Demand Response 'The Ride'"]);
         x_data.push(mnt_data.year);
         
       })
-      data_point1.unshift("Fixed route revenue service hours");
-      data_point2.unshift("Demand response the ride rsh");
+      data_point1.unshift("Fixed Route");
+      data_point2.unshift("Demand Response 'The Ride'");
       data_parsed.push(
           data_point1
           );
@@ -83,8 +83,16 @@
         data: {
             x: 'year',
             columns: data_parsed,
-             type: 'line'
+            type: 'line',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format(', ')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
           },
+          
         // data: {
         //     json: data_parsed,
         //     keys: {
@@ -105,7 +113,7 @@
                  x: {
                     type: 'category',
                       categories: data_parsed.map(function(d){
-                        console.log(d.year)
+//                        console.log(d.year)
                         return d.year;
                       }),
                   // height: 100
@@ -113,7 +121,7 @@
               y: {
                   label: {
                     text: 'MBTA Service Provided (Service Revenue Hours)',
-                    // position: 'outer-middle'
+                     position: 'outer-middle'
                   },
                   tick: {
                     format: d3.format(",")

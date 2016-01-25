@@ -22,7 +22,7 @@
         _data.push(
         {
           "MA": +each.ma_fo,
-          "PS": +each.ps_fo,
+          "Peer States": +each.ps_fo,
           "US": +each.us_fo,
           date: new Date(each.year, 01, 01),
           "Year": each.year,
@@ -39,13 +39,13 @@
       _data.forEach(function(mnt_data){
         console.log(mnt_data)
         data_point1.push(mnt_data["MA"]);
-        data_point2.push(mnt_data["PS"]);
+        data_point2.push(mnt_data["Peer States"]);
         data_point3.push(mnt_data["US"]);
         x_data.push(mnt_data["Year"]);
         
       })
       data_point1.unshift("MA");
-      data_point2.unshift("PS");
+      data_point2.unshift("Peer States");
       data_point3.unshift("US");
       data_parsed.push(
           data_point1
@@ -92,6 +92,13 @@
             x: 'Year',
             columns: data_parsed,
              type: 'line',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format('%')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
             // axes: {
             //     "RTA Ridership": 'y',
             //     "Revenue Service Hours": 'y2'
@@ -129,7 +136,7 @@
                     position: 'outer-middle'
                   },
                   max: 0.60,
-                  min: 0.01,
+                  min: 0.05,
                   tick: {
                     format: function(d) {return (d*100).toFixed(0) + '%';}
                     //or format: function (d) { return '$' + d; }

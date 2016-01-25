@@ -21,8 +21,8 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "Total Massdot pavement in good or excellent condition": +each.total_massdot_pavement_in_good_or_excellent_condition,
-          "Target level": +each.target_level,
+          "% of MassDOT Pavement in Good or Excellent Condition": +each.total_massdot_pavement_in_good_or_excellent_condition,
+          "MassDOT Performance Target": +each.target_level,
           // "US": +each.us_fo,
           date: new Date(each.year, 01, 01),
           "Year": each.year,
@@ -38,14 +38,14 @@
       
       _data.forEach(function(mnt_data){
         console.log(mnt_data)
-        data_point1.push(mnt_data["Total Massdot pavement in good or excellent condition"]);
-        data_point2.push(mnt_data["Target level"]);
+        data_point1.push(mnt_data["% of MassDOT Pavement in Good or Excellent Condition"]);
+        data_point2.push(mnt_data["MassDOT Performance Target"]);
         // data_point3.push(mnt_data["US"]);
         x_data.push(mnt_data["Year"]);
         
       })
-      data_point1.unshift("Total Massdot pavement in good or excellent condition");
-      data_point2.unshift("Target level");
+      data_point1.unshift("% of MassDOT Pavement in Good or Excellent Condition");
+      data_point2.unshift("MassDOT Performance Target");
       // data_point3.unshift("US");
       data_parsed.push(
           data_point1
@@ -92,6 +92,13 @@
             x: 'Year',
             columns: data_parsed,
              type: 'bar',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format('%')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
             // axes: {
             //     "RTA Ridership": 'y',
             //     "Revenue Service Hours": 'y2'
@@ -125,11 +132,11 @@
               },
               y: {
                   label: {
-                    text: 'Total MassDOT Pavement in Good or Excellent Condition',
+                    text: '% of MassDOT Pavement in Good or Excellent Condition',
                     position: 'outer-middle'
                   },
                   max: 0.90,
-                  min: 0.01,
+                  min: 0.1,
                   tick: {
                     format: function(d) {return (d*100).toFixed(0) + '%';}
                     //or format: function (d) { return '$' + d; }
@@ -159,7 +166,7 @@
               show: true
           }
       })
-      chart.transform('line', 'Target level')
+      chart.transform('line', 'MassDOT Performance Target')
       // console.log(chart.data.colors());
       
       // chart.data.colors({
