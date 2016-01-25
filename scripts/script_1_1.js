@@ -13,7 +13,7 @@
        data_point = []
       // console.log(d3.keys(j.rows[0]))
       
-
+       var time_map = d3.map()
       // parse
       j.rows.forEach(function(each) {
         // if ((indexOf.call(scity, each.town) >= 0)) {
@@ -23,10 +23,10 @@
           month: each.month,
           "Ridership": +each.all_modes,
           date: new Date(each.year, each.month, 01),
-          mon: (new Date(each.year, each.month, 01)).getFullYear() + ", " + (new Date(each.year, each.month, 01)).getMonth()
+          mon: (new Date(each.year, each.month, 01)).getFullYear() + ", " + (Number((new Date(each.year, each.month, 01)).getMonth())+1).toString()
         }
         )
-        
+        time_map.set(new Date(each.year, each.month, 01), (new Date(each.year, each.month, 01)).getFullYear() + ", " + (new Date(each.year, each.month, 01)).getMonth())
       })
       var _nestedData = d3.nest()
           .key(function(d){return d.year})
@@ -35,7 +35,7 @@
       
       _data.forEach(function(mnt_data){
         data_point.push(mnt_data["Ridership"]);
-        x_data.push(mnt_data.date);
+        x_data.push(mnt_data.mon);
         
       })
       data_point.unshift('Ridership');
@@ -98,9 +98,20 @@
                   x: {
                     type: 'category',
                       categories: data_parsed.map(function(d){
-                        console.log(d.year)
-                        return d.year;
+//                          Thu Feb 01 2007 00:00:00 GMT-0500 (EST)
+//                          var format = d3.time.format("%Y-%m-%d");
+//                          console.log("the year in the frist graph")
+//                          console.log("only d",d.getYear)
+//                          month_format = time_map.get(d)
+//                            console.log(month_format)
+//                        console.log(d)
+                        return d;
                       }),
+                      tick: {
+                          rotate: 75,
+                          multiline: false
+                      },
+                      height: 200
                   // height: 100
               },
                   // height: 100
@@ -110,7 +121,7 @@
                     // position: 'outer-middle'
                   },
                   tick: {
-                    format: function(d) {return d.toFixed(0);}
+                    format:  d3.format(",") //function(d) {return d.toFixed(0);}
                     //or format: function (d) { return '$' + d; }
                   }
                   // max: 1
