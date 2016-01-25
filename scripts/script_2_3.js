@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+//      console.log(j);
        data_parsed = []
        _data = []
        x_data = []
@@ -58,7 +58,7 @@
       //   );
       x_data.unshift("Line");
       data_parsed.unshift(x_data);
-      console.log("data_parsed", data_parsed);
+//      console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -95,7 +95,7 @@
             labels: {
               format:  function (v, id, i, j) { 
                 val = v * 2281;
-                return (v*100).toFixed(0) + '%' + '(' + val.toFixed(0) + ')'
+                return (v*100).toFixed(0) + '%' + ' (' + val.toFixed(0) + ')'
               }
             }
             // axes: {
@@ -123,8 +123,8 @@
                  x: {
                     type: 'category',
                       categories: data_parsed.map(function(d){
-                        console.log(d)
-                        console.log(d["Line"])
+//                        console.log(d)
+//                        console.log(d["Line"])
                         return d["Line"];
                       }),
                   height: 100

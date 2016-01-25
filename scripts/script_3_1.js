@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+//      console.log(j);
        data_parsed = []
        _data = []
        x_data = []
@@ -37,7 +37,7 @@
       // console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        console.log(mnt_data)
+//        console.log(mnt_data)
         data_point1.push(mnt_data["MBTA projected operating deficit in millions of dollars"]);
         // data_point2.push(mnt_data["Target level"]);
         // data_point3.push(mnt_data["US"]);
@@ -58,7 +58,7 @@
       //   );
       x_data.unshift('Year');
       data_parsed.unshift(x_data);
-      console.log("data_parsed", data_parsed);
+//      console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -92,6 +92,13 @@
             x: 'Year',
             columns: data_parsed,
             type: 'line',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+                val = v * 2281;
+                return d3.format('$, ')(v.toFixed(0)) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            },
 
             // axes: {
             //     "RTA Ridership": 'y',
@@ -118,8 +125,8 @@
                  x: {
                     type: 'timeserries',
                       categories: data_parsed.map(function(d){
-                        console.log(d)
-                        console.log(d["Year"])
+//                        console.log(d)
+//                        console.log(d["Year"])
                         return d["Year"];
                       }),
                   // height: 100

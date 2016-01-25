@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+//      console.log(j);
        data_parsed = []
        _data = []
        x_data = []
@@ -34,10 +34,10 @@
       var _nestedData = d3.nest()
           .key(function(d){return d["Year"]})
           .entries(_data);
-      console.log("data",_nestedData);
+//      console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        console.log(mnt_data)
+//        console.log(mnt_data)
         data_point1.push(mnt_data["MA"]);
         data_point2.push(mnt_data["Peer States"]);
         data_point3.push(mnt_data["US"]);
@@ -58,7 +58,7 @@
         );
       x_data.unshift('Year');
       data_parsed.unshift(x_data);
-      console.log("data_parsed", data_parsed);
+//      console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -124,8 +124,8 @@
                  x: {
                     type: 'timeserries',
                       categories: data_parsed.map(function(d){
-                        console.log(d)
-                        console.log(d["Year"])
+//                        console.log(d)
+//                        console.log(d["Year"])
                         return d["Year"];
                       }),
                   // height: 100
