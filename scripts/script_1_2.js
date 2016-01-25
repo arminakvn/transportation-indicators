@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+//      console.log(j);
        data_parsed = []
        _data = []
        x_data = []
@@ -32,7 +32,7 @@
       var _nestedData = d3.nest()
           .key(function(d){return d.Year})
           .entries(_data);
-      console.log("data",_nestedData);
+//      console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
         data_point1.push(mnt_data["Fixed Route"]);
@@ -50,7 +50,7 @@
         );
       x_data.unshift('year');
       data_parsed.unshift(x_data);
-      console.log("data_parsed", data_parsed);
+//      console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -142,7 +142,7 @@
               show: true
           }
       })
-      console.log(chart.data.colors());
+//      console.log(chart.data.colors());
       
       // chart.data.colors({
       //   '_0_to_29_minutes': base_color,
