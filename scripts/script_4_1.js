@@ -63,7 +63,7 @@
                     text: 'Patents of commuters',
                      position: 'outer-middle'
                   },
-                  max: 1,
+                  max: 0.9,
                   tick: {
                     format: d3.format("%,")
                     //or format: function (d) { return '$' + d; }

@@ -22,7 +22,7 @@
            }
         )
       data_map = d3.map(data_parsed, function(d){return d.label;});
-      console.log(data_map)
+      console.log("data parsed and data map",data_map)
       function carto_db_fields (val) {
         console.log(data_map.get(val.label)["Commute Time"]);
         return data_map.get(val.label)["Commute Time"] > 1;
@@ -54,7 +54,14 @@
             'other':base_color.darker(3),
             'car':base_color.darker(4)
             },
-            type: 'bar'
+            type: 'bar',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format(', ')(v.toFixed(1)) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
           },
           axis: {
               x: {
@@ -71,7 +78,7 @@
               y: {
                   label: {
                     text: 'Average commute time to work',
-                    // position: 'outer-middle'
+                     position: 'outer-middle'
                   }
                   // max: 1
 

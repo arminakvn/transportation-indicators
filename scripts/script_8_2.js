@@ -69,7 +69,14 @@
             // "Bus":base_color.darker(3),
             // "Other/Unknown Vehicle":base_color.darker(4)
             // },
-            type: 'bar'
+            type: 'bar',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format(', ')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
           },
           axis: {
               x: {
@@ -79,7 +86,7 @@
                   }),
                   tick: {
                       // rotate: 100,
-                      // multiline: true
+                       multiline: true
                   },
                   height: 100
               },

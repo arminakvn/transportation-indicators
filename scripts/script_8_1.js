@@ -66,7 +66,14 @@
             'other':base_color.darker(3),
             'car':base_color.darker(4)
             },
-            type: 'line'
+            type: 'line',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format(', ')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
           },
           axis: {
               x: {
@@ -83,7 +90,7 @@
               y: {
                   label: {
                     text: 'Fatal Crash Rate per 100M VMT',
-                    // position: 'outer-middle'
+                     position: 'outer-middle'
                   },
                   tick: {
                     format: function(d) {return d.toFixed(1);}
