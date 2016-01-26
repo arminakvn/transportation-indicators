@@ -6,7 +6,6 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
        data_parsed = []
       // console.log(d3.keys(j.rows[0]))
       
@@ -24,7 +23,6 @@
         )
         // }
       })
-      console.log("data",data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -77,7 +75,7 @@
                   }),
                   tick: {
                       // rotate: 100,
-                      // multiline: true
+                       multiline: true
                   },
                   height: 100
               },
@@ -105,7 +103,6 @@
               show: true
           }
       })
-      console.log(chart.data.colors());
       
       // chart.data.colors({
       //   '_0_to_29_minutes': base_color,

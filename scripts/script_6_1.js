@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+      
        data_parsed = []
       // console.log(d3.keys(j.rows[0]))
       
@@ -27,7 +27,7 @@
         )
         // }
       })
-      console.log("data",data_parsed);
+     
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -70,7 +70,14 @@
 //             "Transit":base_color.darker(3),
 //             "Walk":base_color.darker(4)
 //             },
-            type: 'bar'
+            type: 'bar',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format(', ')(v.toFixed(2)) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
           },
           axis: {
               x: {
@@ -104,7 +111,7 @@
               show: true
           }
       })
-      console.log(chart.data.colors());
+     
       
       // chart.data.colors({
       //   '_0_to_29_minutes': base_color,

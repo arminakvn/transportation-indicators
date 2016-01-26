@@ -92,6 +92,13 @@
             x: 'Fiscal Year',
             columns: data_parsed,
             type: 'line',
+            labels: {
+              format:  function (v, id, i, j) { 
+//                  console.log("v,id,i,j",v,id,i,j)
+//                val = v * 2281;
+                return d3.format('%, ')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+              }
+            }
 
             // axes: {
             //     "RTA Ridership": 'y',

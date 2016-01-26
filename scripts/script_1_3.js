@@ -35,7 +35,6 @@
 //      console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        console.log(mnt_data)
         data_point1.push(mnt_data["RTA Ridership"]);
         data_point2.push(mnt_data["Revenue Service Hours"]);
         x_data.push(mnt_data["Year"]);
@@ -125,7 +124,7 @@
               y: {
                   label: {
                     text: 'RTA Ridership',
-                    // position: 'outer-middle'
+                     position: 'outer-middle'
                   },
                   max: 35000000,
                   tick: {

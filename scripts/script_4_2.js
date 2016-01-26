@@ -6,7 +6,7 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+     
       total_mean = j.rows[0].total_mean
        data_parsed = []
       // console.log(d3.keys(j.rows[0]))
@@ -22,9 +22,9 @@
            }
         )
       data_map = d3.map(data_parsed, function(d){return d.label;});
-      console.log("data parsed and data map",data_map)
+     
       function carto_db_fields (val) {
-        console.log(data_map.get(val.label)["Commute Time"]);
+        
         return data_map.get(val.label)["Commute Time"] > 1;
       }
       data_p = data_parsed.filter(carto_db_fields);
@@ -95,7 +95,7 @@
               show: true
           }
       })
-      console.log(chart.data.colors());
+     
       
       // chart.data.colors({
       //   '_0_to_29_minutes': base_color,

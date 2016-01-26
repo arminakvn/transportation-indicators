@@ -6,10 +6,10 @@
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-      console.log(j);
+      
         _data = []
         j.rows.forEach(function(each) {
-            console.log("each of the j rows - trying to see if I can update the json here?!", each)
+            
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
@@ -18,7 +18,7 @@
             "More than 60 minutes": +each._60_plus_minutes,
         }
         )
-        console.log(_data)
+        
         
         // }
       })
@@ -82,7 +82,7 @@
               show: true
           }
       })
-      console.log(chart.data.colors());
+     
       
       // chart.data.colors({
       //   '_0_to_29_minutes': base_color,

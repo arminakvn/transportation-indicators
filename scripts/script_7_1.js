@@ -2,11 +2,10 @@
   /*
     2.1 Share of Bridges that are Structurally Deficient, MA vs Peer States vs US
   */
-  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_2_1 ORDER BY year &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
+  var url = "https://arminavn.cartodb.com/api/v2/sql?q=SELECT * FROM table_7_1 & ORDER BY cost &api_key=9150413ca8fb81229459d0a5c2947620e42d0940";
   // var explainable = window.explainable;
     d3.json(url, function(j) {
       base_color = d3.rgb(49, 130, 189);
-//      console.log(j);
        data_parsed = []
        _data = []
        x_data = []
@@ -21,44 +20,42 @@
         // if ((indexOf.call(scity, each.town) >= 0)) {
         _data.push(
         {
-          "MA": +each.ma_fo,
-          "Peer States": +each.ps_fo,
-          "US": +each.us_fo,
-          date: new Date(each.year, 01, 01),
-          "Year": each.year,
+          "Cost": +each.cost,
+           "Metropolitan Area": each.metro,
+          // "US": +each.us_fo,
+//          date: new Date(each.year, 01, 01),
+//          "Race": each.race,
         }
         )
         
         // }
       })
-      var _nestedData = d3.nest()
-          .key(function(d){return d["Year"]})
-          .entries(_data);
-//      console.log("data",_nestedData);
+      // var _nestedData = d3.nest()
+      //     .key(function(d){return d["Year"]})
+      //     .entries(_data);
+      // console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        
-        data_point1.push(mnt_data["MA"]);
-        data_point2.push(mnt_data["Peer States"]);
-        data_point3.push(mnt_data["US"]);
-        x_data.push(mnt_data["Year"]);
+        data_point1.push(mnt_data["Cost"]);
+//         data_point2.push(mnt_data["Metropolitan Area"]);
+        // data_point3.push(mnt_data["US"]);
+        x_data.push(mnt_data["Metropolitan Area"]);
         
       })
-      data_point1.unshift("MA");
-      data_point2.unshift("Peer States");
-      data_point3.unshift("US");
+      data_point1.unshift("Cost");
+//       data_point2.unshift("Overall Average");
+      // data_point3.unshift("US");
       data_parsed.push(
           data_point1
           );
-      data_parsed.push(
-          data_point2
-        );
-      data_parsed.push(
-          data_point3
-        );
-      x_data.unshift('Year');
+//       data_parsed.push(
+//           data_point2
+//         );
+      // data_parsed.push(
+      //     data_point3
+      //   );
+      x_data.unshift('Metropolitan Area');
       data_parsed.unshift(x_data);
-//      console.log("data_parsed", data_parsed);
       // d3.keys(j.rows[0]).forEach(function(each_key) {
       //      data_parsed.push(
       //         {
@@ -87,18 +84,19 @@
           width: 840,
           height: 450
         },
-        bindto: "#chart2_1_2",
+        bindto: "#chart7_1",
         data: {
-            x: 'Year',
+            x: 'Metropolitan Area',
             columns: data_parsed,
-             type: 'line',
+            type: 'bar',
             labels: {
               format:  function (v, id, i, j) { 
 //                  console.log("v,id,i,j",v,id,i,j)
 //                val = v * 2281;
-                return d3.format('%')(v) //+ '%' + '(' + val.toFixed(0) + ')'
+                return d3.format('$, ')(v.toFixed(0)) //+ '%' + '(' + val.toFixed(0) + ')'
               }
             }
+
             // axes: {
             //     "RTA Ridership": 'y',
             //     "Revenue Service Hours": 'y2'
@@ -122,24 +120,27 @@
           axis: {
  
                  x: {
-                    type: 'timeserries',
+                    type: 'category',
                       categories: data_parsed.map(function(d){
-//                        console.log(d)
-//                        console.log(d["Year"])
-                        return d["Year"];
+                        
+                        return d["Cost"];
                       }),
+                     tick: {
+                      rotate: 75,
+                      multiline: false
+                  },
                   // height: 100
               },
               y: {
                   label: {
-                    text: 'Share of Bridges that are Functionally Obsolete, MA vs Peer States vs US',
+                    text: 'Transportation Costs for Large Metro Areas',
                     position: 'outer-middle'
                   },
-                  max: 0.60,
-                  min: 0.05,
+//                   max: 1.00,
+//                  min: 0.10,
                   tick: {
-                    format: function(d) {return (d*100).toFixed(0) + '%';}
-                    //or format: function (d) { return '$' + d; }
+                    format: d3.format("$, ")
+//                      format: function(d) {return (d).toFixed(2);}
                   }
                   // max: 1
 
@@ -166,7 +167,7 @@
               show: true
           }
       })
-      // chart.transform('bar', 'RTA Ridership')
+//       chart.transform('line', 'Overall Average')
       // console.log(chart.data.colors());
       
       // chart.data.colors({

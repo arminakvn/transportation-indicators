@@ -37,7 +37,7 @@
 //      console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        console.log(mnt_data)
+        
         data_point1.push(mnt_data["% of MassDOT Pavement in Good or Excellent Condition"]);
         data_point2.push(mnt_data["MassDOT Performance Target"]);
         // data_point3.push(mnt_data["US"]);

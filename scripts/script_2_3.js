@@ -37,7 +37,7 @@
       // console.log("data",_nestedData);
       
       _data.forEach(function(mnt_data){
-        console.log(mnt_data)
+        
         data_point1.push(mnt_data["Beyond Use Life (%)"]);
         data_point2.push(mnt_data["Data Label"]);
         // data_point3.push(mnt_data["US"]);
